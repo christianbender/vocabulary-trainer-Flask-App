@@ -98,5 +98,24 @@ def load():
     box.load("data.csv")
     return render_template("io.html")
 
+@app.route("/edit", methods = ["POST", "GET"])
+def edit():
+    flag = False
+    if request.method == "POST":
+        deck = int(request.form["deck"]) -1
+        com = box.get_compartments()[deck]
+        flag = True
+        if "front" in request.form:
+            if len(request.form["front"]) > 0 and len(request.form["back"]) > 0:
+                id = int(request.form["card"]) -1
+                com = box.get_compartments()[deck]
+                cs = com.get_cards()
+                cs[id].set_front(request.form["front"])
+                cs[id].set_back(request.form["back"])
+        return render_template("edit.html", cards = com.get_cards(), status = flag)
+    else:
+        return render_template("edit.html", status = flag)
+
 if __name__ == "__main__":
     app.run()
+    # app.run(debug = True)
