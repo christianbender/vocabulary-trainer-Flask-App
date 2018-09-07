@@ -6,7 +6,7 @@ You can save/load the vocabulary as a CSV-file called ```data.csv```. You will f
 
 ### How the app looks like
 
-![How the app looks like](screenshot/screenshot.png "The app")  
+![How the app looks like](screenshot/screenshot2.png "The app")  
 
 ### Install the dependencies  
 
