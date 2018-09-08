@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request
+from flask import Flask, redirect, render_template, request, make_response
 from static.module import *
 
 app = Flask(__name__)
@@ -90,12 +90,17 @@ def io():
 
 @app.route("/io/save", methods = ["POST", "GET"])
 def save():
-    box.save("data.csv")
-    return render_template("io.html")
+    response = make_response(box.create_CSV())
+    response.headers['Content-Disposition'] = 'attachment; filename=words.csv'
+    response.mimetype='text/csv'
+    return response
 
 @app.route("/io/load", methods = ["POST", "GET"])
 def load():
-    box.load("data.csv")
+    if request.method == "POST":
+        path = request.form["file"]
+        box.load(path)
+    
     return render_template("io.html")
 
 @app.route("/edit", methods = ["POST", "GET"])

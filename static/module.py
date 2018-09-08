@@ -143,5 +143,14 @@ class FillingBox(object):
             cd.set_timestamp(float(words[3]))
             self.__compartments[int(words[0])].add_card(cd)
         file.close()
+    def create_CSV(self):
+        content = ""
+
+        for i in range(5):
+            for cd in self.__compartments[i].get_cards():
+                content += "{0};{1};{2};{3}\n".format(i, cd.get_front(), cd.get_back(), cd.get_timestamp())
+        
+        return content
+
     
     
